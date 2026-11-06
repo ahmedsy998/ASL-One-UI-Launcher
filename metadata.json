@@ -1,0 +1,6 @@
+{
+  "name": "ASL One UI Launcher",
+  "description": "لانشر أندرويد احترافي متكامل مستوحى من واجهة Samsung One UI 9 مع دعم كامل للغة العربية، الويدجيت الحقيقية، وتخصيص الأيقونات والخلفيات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

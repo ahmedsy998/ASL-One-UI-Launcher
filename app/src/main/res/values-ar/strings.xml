@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ASL One UI Launcher</string>
+    <string name="launcher_subtitle">مستوحى من Samsung One UI 9 — واجهة احترافية متكاملة للهاتف</string>
+    <string name="search_apps_hint">البحث عن التطبيقات، الاختصارات، جهات الاتصال…</string>
+    <string name="settings_title">إعدادات اللانشر</string>
+    <string name="widgets_title">الويدجيت</string>
+    <string name="wallpapers_title">الخلفيات</string>
+    <string name="themes_title">الأنماط والألوان</string>
+    <string name="icons_title">الأيقونات</string>
+    <string name="animations_title">الحركات والانتقالات</string>
+    <string name="gestures_title">الإيماءات</string>
+    <string name="home_screen_title">الشاشة الرئيسية</string>
+    <string name="app_drawer_title">درج التطبيقات</string>
+    <string name="set_default_launcher">تعيين كواجهة أساسية للهاتف</string>
+    <string name="backup_restore_title">النسخ الاحتياطي والاستعادة</string>
+    <string name="onboarding_welcome_title">مرحباً بك في ASL One UI 9 Launcher</string>
+    <string name="onboarding_welcome_desc">واجهة عربية متكاملة بسرعة 120Hz. اسحب لأعلى لفتح درج التطبيقات، واضغط مطولاً لتخصيص الشاشة والويدجيت والخلفيات.</string>
+</resources>

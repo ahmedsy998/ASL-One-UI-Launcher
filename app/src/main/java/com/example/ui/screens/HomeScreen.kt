@@ -114,6 +114,7 @@ fun HomeScreen(
     onOpenDefaultLauncherPicker: () -> Unit,
     onRemoveHomeItem: (HomeItemEntity) -> Unit,
     onMoveItemToPage: (HomeItemEntity, Int) -> Unit,
+    onSwapHomeItems: (HomeItemEntity, HomeItemEntity) -> Unit,
     onUpdateWidgetAppearance: (HomeItemEntity, Int, Int, String, Float) -> Unit,
     onUpdateFolder: (HomeItemEntity, String, List<FolderAppEntry>, String) -> Unit,
     onCreateFolder: (String, List<InstalledApp>, Int) -> Unit,
@@ -123,6 +124,7 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
 
     var selectedHomeItemForMenu by remember { mutableStateOf<HomeItemEntity?>(null) }
+    var draggingOrSwappingItem by remember { mutableStateOf<HomeItemEntity?>(null) }
     var openedFolderItem by remember { mutableStateOf<HomeItemEntity?>(null) }
     var editingWidgetItem by remember { mutableStateOf<HomeItemEntity?>(null) }
     var showCreateFolderDialog by remember { mutableStateOf(false) }
@@ -301,13 +303,40 @@ fun HomeScreen(
                         appsByPkg = appsByPkg,
                         widgetHost = widgetHost,
                         parseFolderApps = parseFolderApps,
-                        onLaunchApp = onLaunchApp,
-                        onOpenFolder = { openedFolderItem = it },
+                        onLaunchApp = { clickedApp ->
+                            val swapping = draggingOrSwappingItem
+                            if (swapping != null) {
+                                val targetEntity = homeItems.firstOrNull {
+                                    !it.isDock && it.page == pageIndex && it.packageName == clickedApp.packageName
+                                }
+                                if (targetEntity != null && targetEntity.id != swapping.id) {
+                                    onSwapHomeItems(swapping, targetEntity)
+                                }
+                                draggingOrSwappingItem = null
+                            } else {
+                                onLaunchApp(clickedApp)
+                            }
+                        },
+                        onOpenFolder = { folderItem ->
+                            val swapping = draggingOrSwappingItem
+                            if (swapping != null && swapping.id != folderItem.id) {
+                                onSwapHomeItems(swapping, folderItem)
+                                draggingOrSwappingItem = null
+                            } else {
+                                openedFolderItem = folderItem
+                            }
+                        },
                         onOpenSearch = onOpenSearch,
                         onOpenSettings = onOpenSettings,
                         onLongPressItem = { item ->
                             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-                            selectedHomeItemForMenu = item
+                            val swapping = draggingOrSwappingItem
+                            if (swapping != null && swapping.id != item.id) {
+                                onSwapHomeItems(swapping, item)
+                                draggingOrSwappingItem = null
+                            } else {
+                                selectedHomeItemForMenu = item
+                            }
                         }
                     )
                 }
@@ -460,6 +489,15 @@ fun HomeScreen(
                         ) {
                             selectedHomeItemForMenu = null
                             showCreateFolderDialog = true
+                        }
+
+                        ContextMenuButton(
+                            icon = Icons.Default.SwapHoriz,
+                            label = "سحب أو تبديل موضع العنصر على الشبكة",
+                            tint = Color(0xFF38BDF8)
+                        ) {
+                            draggingOrSwappingItem = item
+                            selectedHomeItemForMenu = null
                         }
 
                         if (!item.isDock && settings.homePageCount > 1) {

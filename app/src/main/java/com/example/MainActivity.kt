@@ -196,6 +196,7 @@ fun LauncherRootScreen(viewModel: LauncherViewModel) {
             onOpenDefaultLauncherPicker = { viewModel.appEngine.openDefaultLauncherSettings() },
             onRemoveHomeItem = viewModel::removeHomeItem,
             onMoveItemToPage = viewModel::moveHomeItemToPage,
+            onSwapHomeItems = viewModel::swapOrReorderHomeItems,
             onUpdateWidgetAppearance = viewModel::updateWidgetAppearance,
             onUpdateFolder = viewModel::updateHomeFolder,
             onCreateFolder = viewModel::createHomeFolder,
